@@ -1,1 +1,1 @@
-Write python in your own language!
+Write python in your native language!
