@@ -1,8 +1,15 @@
 from deep_translator import GoogleTranslator as gtrans
 import os
 import json
+import builtins
+import keyword
 
-LANGUAGES = gtrans().get_supported_languages(as_dict=True)
+
+def create_list():
+    all_builtins = [b for b in dir(builtins)]
+    all_keywords = keyword.kwlist
+    combined = all_builtins + all_keywords
+    return combined
 
 
 def save_data():
@@ -27,6 +34,10 @@ def get_language(get_lang):
         return
 
 
+LANGUAGES = gtrans().get_supported_languages(as_dict=True)
+WORDS_LIST = create_list()
+
+
 def main():
     save_data()
     lang = input("What language would you like to use? ")
@@ -36,6 +47,7 @@ def main():
     print(lang)
     search_lang(lang)
     get_language(get_lang)
+    print(WORDS_LIST)
 
 
 if __name__ == "__main__":
