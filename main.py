@@ -1,8 +1,8 @@
-import googletrans as gtrans
+from deep_translator import GoogleTranslator as gtrans
 import os
 import json
 
-LANGUAGES = gtrans.LANGUAGES
+LANGUAGES = gtrans().get_supported_languages(as_dict=True)
 
 
 def save_data():
@@ -14,7 +14,7 @@ def save_data():
 def search_lang(lang):
     with open("lang_data.json", "r") as json_file:
         lang_data = json.load(json_file)
-    if lang in lang_data.values():
+    if lang in lang_data.values() or lang_data.keys():
         return False
     else:
         print("There is not such language. Try typing again")
