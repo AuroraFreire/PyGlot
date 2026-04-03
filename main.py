@@ -21,7 +21,7 @@ def save_data():
 def search_lang(lang):
     with open("lang_data.json", "r") as json_file:
         lang_data = json.load(json_file)
-    if lang in lang_data.values() or lang_data.keys():
+    if lang in lang_data.values() or lang in lang_data.keys():
         return False
     else:
         print("There is not such language. Try typing again")
@@ -30,8 +30,23 @@ def search_lang(lang):
 
 def get_language(get_lang):
     if get_lang == False:
-        print("works")
         return
+
+def translate(lang):
+    with open("lang_data.json", "r") as json_file:
+        lang_data = json.load(json_file)
+    if lang in lang_data.keys():
+        actual_lang = lang_data[lang]
+    else:
+        actual_lang = lang
+    translator = gtrans(source="en", target=actual_lang)
+    translated = []
+    for word in WORDS_LIST:
+        try:
+            translated.append(translator.translate(word))
+        except Exception as e:
+            translated.append(word)
+    return translated
 
 
 LANGUAGES = gtrans().get_supported_languages(as_dict=True)
@@ -44,10 +59,8 @@ def main():
     while search_lang(lang) == True:
         lang = input("What language would you like to use? ")
     get_lang = search_lang(lang)
-    print(lang)
     search_lang(lang)
     get_language(get_lang)
-    print(WORDS_LIST)
 
 
 if __name__ == "__main__":
