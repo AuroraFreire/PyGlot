@@ -13,7 +13,7 @@ def create_list():
 def save_data():
     if not os.path.exists("lang_data.json"):
         with open("lang_data.json", "w") as json_file:
-            json.dump(LANGUAGES, json_file)
+            json.dump(LANGUAGES, json_file, indent=2)
 
 def search_lang(lang):
     with open("lang_data.json", "r") as json_file:
@@ -40,9 +40,8 @@ def translate(lang):
         except Exception:
             translated.append(word)
             print(translator.translate(word))
-    translated
-    with open("translated_data.json", "w") as json_file:
-        json.dump(translated, json_file, ensure_ascii=False)
+    with open("translated_data.json", "w", encoding="utf-8") as json_file:
+        json.dump(translated, json_file, ensure_ascii=False, indent=2)
     return translated
 
 LANGUAGES = gtrans().get_supported_languages(as_dict=True)
