@@ -42,13 +42,19 @@ def translate(lang):
     for word in WORDS_LIST:
         try:
             readable = split_camel(word)
-            translated.append(translator.translate(readable))
-            print(translator.translate(readable))
+            if keyword.iskeyword(word):
+                prompt = "Python keyword: {}".format(readable)
+            else:
+                prompt = "Python built-in function: {}".format(readable)
+            result = translator.translate(prompt)
+            clean = result.split(":")[-1].strip()
+            translated.append(clean)
+            print(clean)
         except Exception:
             translated.append(word)
             print(word)
     translated_data = dict(zip(translated, WORDS_LIST))
-    with open("data/translated_data.json", "w", encoding="utf-32") as json_file:
+    with open("data/translated_data.json", "w", encoding="utf-8") as json_file:
         json.dump(translated_data, json_file, ensure_ascii=False, indent=2)
     return translated_data
 
